@@ -1,0 +1,32 @@
+{
+  "name": "web-stub",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "A dummy web server that displays the contents of a request.",
+  "exports": "./index.js",
+  "scripts": {
+    "docker-build": "docker build -t karlhulme/`echo \"${npm_package_name##*/}\"`:`echo $npm_package_version` .",
+    "docker-push": "docker push karlhulme/`echo \"${npm_package_name##*/}\"`:`echo $npm_package_version`",  
+    "start": "node index.js",
+    "test": "npm test",
+    "reinstall": "rm -rf node_modules && npm install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/karlhulme/web-stub.git"
+  },
+  "author": "Dev GoSkydive <dev@goskydive.com> (http://www.goskydive.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/karlhulme/web-stub/issues"
+  },
+  "homepage": "https://github.com/karlhulme/web-stub#readme",
+  "dependencies": {
+    "body-parse": "^0.1.0",
+    "compression": "^1.7.4",
+    "cookie-parser": "^1.4.5",
+    "express": "^4.17.1",
+    "helmet": "^4.1.1",
+    "hpp": "^0.2.3"
+  }
+}
