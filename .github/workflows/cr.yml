@@ -63,6 +63,12 @@ jobs:
           node-version: 12
           registry-url: https://registry.npmjs.org/
 
+      - name: Install deps
+        run: |
+          npm ci
+        env:
+          CI: true
+
       - name: Push to Docker Hub
         uses: docker/build-push-action@v1
         with:
