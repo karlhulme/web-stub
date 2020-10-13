@@ -63,20 +63,11 @@ jobs:
           node-version: 12
           registry-url: https://registry.npmjs.org/
 
-      - name: Install deps
+      - name: Push to docker hub
         run: |
           npm ci
+          docker login -u=karlhulme -p=${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+          npm run docker-build
+          npm run docker-push
         env:
           CI: true
-
-      - name: Display vars
-        env:
-          TEST_VALUE: ${{ github.repository }}:${{ steps.prepare.outputs.releaseVersion }}
-        run: echo "$TEST_VALUE"
-
-      - name: Push to Docker Hub
-        uses: docker/build-push-action@v1
-        with:
-          username: karlhulme
-          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
-          repository: ${{ github.repository }}:${{ steps.prepare.outputs.releaseVersion }}
