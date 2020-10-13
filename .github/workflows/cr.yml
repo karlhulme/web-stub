@@ -69,6 +69,11 @@ jobs:
         env:
           CI: true
 
+      - name: Display vars
+        env:
+          TEST_VALUE: ${{ github.repository }}:${{ steps.prepare.outputs.releaseVersion }}
+        run: echo "$TEST_VALUE"
+
       - name: Push to Docker Hub
         uses: docker/build-push-action@v1
         with:
