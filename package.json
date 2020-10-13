@@ -1,7 +1,7 @@
 {
   "name": "web-stub",
   "type": "module",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A dummy web server that displays the contents of a request.",
   "scripts": {
     "docker-build": "docker build -t karlhulme/`echo \"${npm_package_name##*/}\"`:`echo $npm_package_version` .",
