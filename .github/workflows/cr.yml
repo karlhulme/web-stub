@@ -5,9 +5,31 @@ on:
     branches:
       - main
 
-jobs:        
+jobs:    
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x, 14.x]
+    steps:
+    - name: Clone repo
+      uses: actions/checkout@v1
+      
+    - name: Setup Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+  
+    - name: Install deps and run tests
+      run: |
+        npm ci
+        npm test
+      env:
+        CI: true
+ 
   release:
     runs-on: ubuntu-latest
+    needs: test
     steps:
       - name: Prepare Release
         id: prepare
@@ -41,11 +63,9 @@ jobs:
           node-version: 12
           registry-url: https://registry.npmjs.org/
 
-      - name: Publish to NPM
-        if: steps.prepare.outputs.canRelease == 'yes'
-        run: |
-          npm ci
-          npm run docker-build
-          npm run docker-push
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+      - name: Push to Docker Hub
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+          repository: ${{ github.repository }}:${{ steps.prepare.outputs.releaseVersion }}
