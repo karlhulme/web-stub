@@ -6,9 +6,9 @@
   "exports": "./index.js",
   "scripts": {
     "docker-build": "docker build -t karlhulme/`echo \"${npm_package_name##*/}\"`:`echo $npm_package_version` .",
-    "docker-push": "docker push karlhulme/`echo \"${npm_package_name##*/}\"`:`echo $npm_package_version`",  
+    "docker-push": "docker push karlhulme/`echo \"${npm_package_name##*/}\"`:`echo $npm_package_version`",
     "start": "node index.js",
-    "test": "npm test",
+    "test": "node --experimental-vm-modules --no-warnings node_modules/jest/bin/jest.js && standard",
     "reinstall": "rm -rf node_modules && npm install"
   },
   "repository": {
@@ -22,11 +22,28 @@
   },
   "homepage": "https://github.com/karlhulme/web-stub#readme",
   "dependencies": {
-    "body-parse": "^0.1.0",
+    "body-parser": "^1.19.0",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.5",
     "express": "^4.17.1",
     "helmet": "^4.1.1",
     "hpp": "^0.2.3"
+  },
+  "devDependencies": {
+    "jest": "^26.5.3",
+    "standard": "^14.3.4",
+    "supertest": "^5.0.0"
+  },
+  "jest": {
+    "collectCoverage": true,
+    "coverageThreshold": {
+      "global": {
+        "branches": 100,
+        "functions": 100,
+        "lines": 100,
+        "statements": 0
+      }
+    },
+    "testEnvironment": "node"
   }
 }

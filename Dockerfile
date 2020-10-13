@@ -9,5 +9,5 @@ COPY index.js /usr/src/app/
 
 # Start up
 WORKDIR /usr/src/app
-EXPOSE 80
+EXPOSE 31280
 CMD [ "npm", "start" ]
