@@ -66,7 +66,7 @@ jobs:
       - name: Push to docker hub
         run: |
           npm ci
-          ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }} | docker login -u=karlhulme --password-stdin
+          echo ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }} | docker login -u=${{ github.repository_owner }} --password-stdin
           npm run docker-build
           npm run docker-push
         env:
